@@ -1,10 +1,23 @@
 using Project_B_Server.Components;
 
+using Microsoft.AspNetCore.ResponseCompression;
+using Project_B_Server.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Heroku will set the PORT environment variable
+builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT"));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Response Compression Middleware services
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 
 var app = builder.Build();
 
@@ -23,6 +36,10 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+// SignalR stuff
+app.UseResponseCompression();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
 
