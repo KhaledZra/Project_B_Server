@@ -1,0 +1,6 @@
+﻿services:
+  project_b_server:
+    image: project_b_server
+    build:
+      context: .
+      dockerfile: Dockerfile
