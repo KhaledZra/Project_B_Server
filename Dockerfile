@@ -2,9 +2,9 @@
 WORKDIR /app
 
 COPY . ./
-
 # Restore dependencies
 RUN dotnet restore
+
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 

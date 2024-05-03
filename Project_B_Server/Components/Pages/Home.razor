@@ -1,6 +1,5 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@using System.Globalization
 @using Microsoft.AspNetCore.SignalR.Client
 @using Project_B_Server_Domain
 @using Project_B_Server.Services
@@ -46,16 +45,13 @@
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
         
+        // Sync with the database
         messages = await MessageService.GetMessages();
 
-        hubConnection.On<string, string, string>("ReceiveMessage", (user, message, date) =>
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            messages.Add(new Message()
-            {
-                User = user,
-                Text = message,
-                DateStamp = DateTime.Parse(date, CultureInfo.InvariantCulture)
-            });
+            // TODO the time will not be 1=1 since this is set locally vs the one saved in the database
+            messages.Add(new Message { User = user, Text = message, DateStamp = DateTime.Now });
             InvokeAsync(StateHasChanged);
         });
 

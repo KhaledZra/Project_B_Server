@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Project_B_Server\docker-compose.yml = Project_B_Server\docker-compose.yml
 		README.md = README.md
+		.dockerignore = .dockerignore
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_B_Server_Domain", "Project_B_Server_Domain\Project_B_Server_Domain.csproj", "{B33B394E-49F9-4CFA-9299-670C61FFF064}"
