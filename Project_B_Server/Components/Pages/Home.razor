@@ -2,7 +2,10 @@
 @rendermode InteractiveServer
 @using System.Globalization
 @using Microsoft.AspNetCore.SignalR.Client
+@using Project_B_Server_Domain
+@using Project_B_Server.Services
 @inject NavigationManager Navigation
+@inject MessageService MessageService
 @implements IAsyncDisposable
 
 <PageTitle>Home</PageTitle>
@@ -26,27 +29,33 @@
 <ul id="messagesList">
     @foreach (var message in messages.AsEnumerable().Reverse())
     {
-        <li>@message</li>
+        <li>[@message.DateStamp] @message.User: @message.Text</li>
     }
 </ul>
 
 @code {
     private HubConnection? hubConnection;
-    private List<string> messages = new List<string>();
+    private List<Message> messages = new();
     private string? userInput;
     private string? messageInput;
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine($"Connecting to: {Navigation.ToAbsoluteUri("/chathub")}");
+        Console.WriteLine($"{DateTime.Now} - Connecting to: {Navigation.ToAbsoluteUri("/chathub")}");
         hubConnection = new HubConnectionBuilder()
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
+        
+        messages = await MessageService.GetMessages();
 
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        hubConnection.On<string, string, string>("ReceiveMessage", (user, message, date) =>
         {
-            var encodedMsg = $"[{DateTime.Now.ToString(CultureInfo.InvariantCulture)}] {user}: {message}";
-            messages.Add(encodedMsg);
+            messages.Add(new Message()
+            {
+                User = user,
+                Text = message,
+                DateStamp = DateTime.Parse(date, CultureInfo.InvariantCulture)
+            });
             InvokeAsync(StateHasChanged);
         });
 
@@ -58,6 +67,7 @@
         if (hubConnection is not null)
         {
             await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+            await MessageService.AddMessageAsync(userInput, messageInput, DateTime.Now);
             messageInput = null;
         }
     }

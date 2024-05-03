@@ -1,13 +1,25 @@
 using Project_B_Server.Components;
 
 using Microsoft.AspNetCore.ResponseCompression;
+using Project_B_Server;
 using Project_B_Server.Hubs;
+using Project_B_Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Heroku will set the PORT environment variable
-builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT"));
-// mongodb+srv://khaledz:khaled1K@biotranancluster.e1xhomj.mongodb.net/test
+// Heroku will set the PORT environment variable else default
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PORT")))
+    builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT"));
+else
+{
+    builder.WebHost.UseUrls("http://*:5000");
+}
+
+// MongoDb Setup
+MongoDbSetup.AddMongoDb(builder);
+
+// Setup services
+builder.Services.AddScoped<MessageService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

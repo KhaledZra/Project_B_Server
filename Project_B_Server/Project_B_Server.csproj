@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,10 @@
     <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\project.assets.json" />
     <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\project.packagespec.json" />
     <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\Project_B_Server_Domain.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Project_B_Server_Domain\Project_B_Server_Domain.csproj" />
   </ItemGroup>
 
 </Project>
