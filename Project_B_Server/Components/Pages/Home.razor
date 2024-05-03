@@ -40,7 +40,7 @@
     {
         Console.WriteLine($"Connecting to: {Navigation.ToAbsoluteUri("/chathub")}");
         hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://project-b-server-081b429cac7e.herokuapp.com/chathub")
+            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
