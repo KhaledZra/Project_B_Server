@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Project_B_Server_Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Project_B_Server_Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Project_B_Server_Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Project_B_Server_Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="Project_B_Server_Domain\obj\Project_B_Server_Domain.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+</Project>

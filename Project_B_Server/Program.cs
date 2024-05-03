@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Heroku will set the PORT environment variable
 builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT"));
+// mongodb+srv://khaledz:khaled1K@biotranancluster.e1xhomj.mongodb.net/test
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
