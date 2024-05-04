@@ -21,7 +21,9 @@
         <input @bind="messageInput" size="50" />
     </label>
 </div>
-<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+<button @onclick="Send" disabled="@(ButtonStatus())">
+    Send
+</button>
 
 <hr>
 
@@ -78,4 +80,9 @@
             await hubConnection.DisposeAsync();
         }
     }
+
+    private bool ButtonStatus() =>
+        string.IsNullOrWhiteSpace(messageInput) ||
+        string.IsNullOrWhiteSpace(userInput) ||
+        !IsConnected;
 }
