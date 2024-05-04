@@ -25,18 +25,14 @@ jobs:
         dotnet-version: '8.0'
 
     - name: Deploy Docker Image to Heroku App
-    # You may pin to the exact commit or the version.
-    # uses: jctaveras/heroku-deploy@0d5d4bcc407b643bc0327aae9a22b854427b8348
-      uses: jctaveras/heroku-deploy@v3.1.0
+      id: heroku
+      uses: pier-digital/heroku-deploy@v2.1.9
       with:
-        # Email Linked to your Heroku Account
         email: ${{ secrets.HEROKU_EMAIL }}
-        # Your Heroku API Key
         api_key: ${{ secrets.HEROKU_API_KEY }}
-        # Your Heroku App Name
         app_name: project-b-server
-        # Dokerfile path
-        dockerfile_path: '.'
-        # Heroku Process Type
-        process_type: 'web'
+        dockerfile: 'Dockerfile'
+        dockerfile_path: '' # set the path to the folder where the Dockerfile is located
+        options: '' # Docker Build Options
+        formation: '' # Docker Dyno Formation. By default is web
           
