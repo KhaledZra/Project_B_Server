@@ -36,7 +36,7 @@ jobs:
         # Your Heroku App Name
         app_name: project-b-server
         # Dokerfile path
-        dockerfile_path: .
+        dockerfile_path: '.'
         # Heroku Process Type
-        process_type: web
+        process_type: 'web'
           
