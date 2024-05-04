@@ -1,0 +1,42 @@
+name: CI_CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: App Settings Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: './Project_B_Server/appsettings.json'
+      env:
+        MongoDB.ConnectionUri: ${{ secrets.MONGO_CONNECTION_URI }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0'
+
+    - name: Deploy Docker Image to Heroku App
+    # You may pin to the exact commit or the version.
+    # uses: jctaveras/heroku-deploy@0d5d4bcc407b643bc0327aae9a22b854427b8348
+      uses: jctaveras/heroku-deploy@v3.1.0
+      with:
+        # Email Linked to your Heroku Account
+        email: ${{ secrets.HEROKU_EMAIL }}
+        # Your Heroku API Key
+        api_key: ${{ secrets.HEROKU_API_KEY }}
+        # Your Heroku App Name
+        app_name: project-b-server
+        # Dokerfile path
+        dockerfile_path: .
+        # Heroku Process Type
+        process_type: web
+          
