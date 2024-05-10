@@ -20,5 +20,11 @@ public static class MongoDbSetup
                 mongoClient: provider.GetService<MongoClient>()!,
                 databaseName: provider.GetService<IOptions<MongoDbSettings>>()!.Value.DatabaseName,
                 collectionName: "messages"));
+        
+        builder.Services.AddScoped<MongoDbService<Client>>(provider => 
+            new MongoDbService<Client>(
+                mongoClient: provider.GetService<MongoClient>()!,
+                databaseName: provider.GetService<IOptions<MongoDbSettings>>()!.Value.DatabaseName,
+                collectionName: "clients"));
     }
 }

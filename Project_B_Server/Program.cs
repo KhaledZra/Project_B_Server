@@ -20,6 +20,7 @@ MongoDbSetup.AddMongoDb(builder);
 
 // Setup services
 builder.Services.AddScoped<MessageService>();
+builder.Services.AddScoped<ClientService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
