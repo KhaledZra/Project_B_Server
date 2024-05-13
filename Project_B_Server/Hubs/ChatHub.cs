@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using Project_B_Server_Domain;
 using Project_B_Server.Services;
 
 namespace Project_B_Server.Hubs;
@@ -11,17 +12,18 @@ public class ChatHub(ClientService clientService) : Hub
         return base.OnConnectedAsync();
     }
     
-    // public override async Task OnDisconnectedAsync(Exception? exception)
-    // {
-    //     Client disconnectedClient = ConnectedClients.Find(c => c.ClientId == Context.ConnectionId);
-    //     if (disconnectedClient is not null)
-    //     {
-    //         Console.WriteLine($"Client {disconnectedClient.ClientName} has disconnected.");
-    //         ConnectedClients.Remove(disconnectedClient);
-    //         await Clients.All.SendAsync("ReceiveClientDisconnectedNotification", disconnectedClient.ClientName);
-    //     }
-    //     await base.OnDisconnectedAsync(exception);
-    // }
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        Client? disconnectedClient = await clientService.GetClientWithClientIdAsync(Context.ConnectionId);
+        
+        if (disconnectedClient is not null)
+        {
+            Console.WriteLine($"Client {disconnectedClient.ClientName} has disconnected.");
+            await clientService.DeleteClientAsync(disconnectedClient.Id!); // Can't be null since it's set by MongoDB
+            await Clients.All.SendAsync("ReceiveClientDisconnectedNotification", disconnectedClient.ClientName);
+        }
+        await base.OnDisconnectedAsync(exception);
+    }
     
     public async Task SendClientInfo(string user)
     {
