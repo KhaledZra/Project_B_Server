@@ -56,6 +56,20 @@ public class MongoDbService<T>
 
         return await _collection.Find(filter).ToListAsync();
     }
+    
+    public async Task<T> GetItemWithCustomFilterAsync<TVal>(string field, TVal value,
+        MongoFilters filters = MongoFilters.Default)
+    {
+        FilterDefinition<T> filter = Builders<T>.Filter.Empty;
+
+        if (filters is MongoFilters.Default or MongoFilters.Equal) filter = Builders<T>.Filter.Eq(field, value);
+        else if (filters is MongoFilters.GreaterThan) filter = Builders<T>.Filter.Gt(field, value);
+        else if (filters is MongoFilters.LessThan) filter = Builders<T>.Filter.Lt(field, value);
+        else if (filters is MongoFilters.GreaterthanOrEqual) filter = Builders<T>.Filter.Gte(field, value);
+        else if (filters is MongoFilters.LessThanOrEqual) filter = Builders<T>.Filter.Lte(field, value);
+
+        return await _collection.Find(filter).SingleAsync();
+    }
 
     // Create
     public async Task CreateItemAsync(T item)

@@ -1,4 +1,6 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
+using MongoDB.Bson;
 using Project_B_Server_Domain;
 using Project_B_Server.Services;
 
@@ -25,18 +27,18 @@ public class ChatHub(ClientService clientService) : Hub
         await base.OnDisconnectedAsync(exception);
     }
     
-    public async Task SendClientInfo(string user)
+    public async Task SendClientInfo(string user, float positionX, float positionY)
     {
-        Console.WriteLine("Saving new client info: " + user + " with connection id: " + Context.ConnectionId);
-        await clientService.AddClientAsync(Context.ConnectionId, user);
-        await Clients.All.SendAsync("ReceiveNewClientNotification", user);
+        Console.WriteLine("Saving new client info: " + user + " with connection id: " + Context.ConnectionId + " at position (" + positionX + ", " + positionY + ")");
+        await clientService.AddClientAsync(Context.ConnectionId, user, positionX, positionY);
+        await Clients.All.SendAsync("ReceiveNewClientNotification", user, positionX, positionY);
     }
     
     public async Task SendClientsInfoToCaller()
     {
         var connectedClients = await clientService.GetClientsAsync();
         // send back only the client names
-        await Clients.Caller.SendAsync("ReceiveClientsInfo", connectedClients.Select(c => c.ClientName).ToList());
+        await Clients.Caller.SendAsync("ReceiveClientsInfo", JsonSerializer.Serialize(connectedClients));
         Console.WriteLine("ConnectedClients.Count: " + connectedClients.Count);
     }
     
@@ -45,9 +47,10 @@ public class ChatHub(ClientService clientService) : Hub
         await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
 
-    public async Task SendPosition(string user, float x, float y, float rotationRadians)
+    public async Task SendPosition(string user, float x, float y, float rotationRadians, float directionX, float directionY)
     {
-        Console.WriteLine($"[{DateTime.Now}] - {user} moved to ({x}, {y}) with rotation {rotationRadians} radians.");
-        await Clients.All.SendAsync("ReceivePosition", user, x, y, rotationRadians);
+        Console.WriteLine($"[{DateTime.Now}] - {user} moved to ({x}, {y}) with rotation {rotationRadians} radians. Direction: ({directionX}, {directionY})");
+        await Clients.All.SendAsync("ReceivePosition", user, x, y, rotationRadians, directionX, directionY);
+        Task.Run(() => clientService.UpdateClientPositionAsync(user, x, y));
     }
 }

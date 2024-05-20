@@ -18,13 +18,25 @@ public class ClientService(MongoDbService<Client> mongoDbService)
         return result.First();
     }
 
-    public async Task AddClientAsync(string clientId, string clientName)
+    public async Task AddClientAsync(string clientId, string clientName, float positionX, float positionY)
     {
         await mongoDbService.CreateItemAsync(new Client
         {
             ClientId = clientId,
-            ClientName = clientName
+            ClientName = clientName,
+            PositionX = positionX,
+            PositionY = positionY
         });
+    }
+
+    public async Task UpdateClientPositionAsync(string clientName, float positionX, float positionY)
+    {
+        Client client = await mongoDbService.GetItemWithCustomFilterAsync("ClientName", clientName);
+        
+        client.PositionX = positionX;
+        client.PositionY = positionY;
+
+        await mongoDbService.ReplaceItemAsync(client, client.Id!);
     }
     
     public async Task DeleteClientAsync(string id)
