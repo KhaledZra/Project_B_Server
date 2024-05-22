@@ -1,13 +1,14 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
-using MongoDB.Bson;
 using Project_B_Server_Domain;
 using Project_B_Server.Services;
 
 namespace Project_B_Server.Hubs;
 
-public class ChatHub(ClientService clientService) : Hub
+public class ServerHub(ClientService clientService) : Hub
 {
+    
+    // Todo: unit test this class https://learn.microsoft.com/en-us/aspnet/signalr/overview/testing-and-debugging/unit-testing-signalr-applications
     public override Task OnConnectedAsync()
     {
         Console.WriteLine("A new client has connected. Context.ConnectionId: " + Context.ConnectionId);

@@ -42,9 +42,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine($"{DateTime.Now} - Connecting to: {Navigation.ToAbsoluteUri("/chathub")}");
+        Console.WriteLine($"{DateTime.Now} - Connecting to: {Navigation.ToAbsoluteUri("/serverhub")}");
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+            .WithUrl(Navigation.ToAbsoluteUri("/serverhub"))
             .Build();
         
         // Sync with the database

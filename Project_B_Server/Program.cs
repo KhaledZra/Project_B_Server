@@ -53,9 +53,6 @@ app.MapRazorComponents<App>()
 
 // SignalR stuff
 app.UseResponseCompression();
-app.MapHub<ChatHub>("/chathub");
+app.MapHub<ServerHub>("/serverhub");
 
 app.Run();
-
-// TODO Continue from Add a SignalR hub
-// https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-8.0&tabs=netcore-cli
