@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_B_Server_Domain", "Project_B_Server_Domain\Project_B_Server_Domain.csproj", "{B33B394E-49F9-4CFA-9299-670C61FFF064}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_B_Server_Test", "Project_B_Server_Test\Project_B_Server_Test.csproj", "{41DB79E9-A24A-4EE8-A889-CB6FE1DCB7BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +34,9 @@ Global
 		{B33B394E-49F9-4CFA-9299-670C61FFF064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B33B394E-49F9-4CFA-9299-670C61FFF064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B33B394E-49F9-4CFA-9299-670C61FFF064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41DB79E9-A24A-4EE8-A889-CB6FE1DCB7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41DB79E9-A24A-4EE8-A889-CB6FE1DCB7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41DB79E9-A24A-4EE8-A889-CB6FE1DCB7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41DB79E9-A24A-4EE8-A889-CB6FE1DCB7BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
