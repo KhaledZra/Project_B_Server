@@ -28,11 +28,11 @@ public class ServerHub(ClientService clientService) : Hub
         await base.OnDisconnectedAsync(exception);
     }
     
-    public async Task SendClientInfo(string user, float positionX, float positionY)
+    public async Task SendClientInfo(string user, string clientPlayerSpriteName, float positionX, float positionY)
     {
         Console.WriteLine("Saving new client info: " + user + " with connection id: " + Context.ConnectionId + " at position (" + positionX + ", " + positionY + ")");
-        await clientService.AddClientAsync(Context.ConnectionId, user, positionX, positionY);
-        await Clients.All.SendAsync("ReceiveNewClientNotification", user, positionX, positionY);
+        await clientService.AddClientAsync(Context.ConnectionId, user, clientPlayerSpriteName, positionX, positionY);
+        await Clients.All.SendAsync("ReceiveNewClientNotification", user, clientPlayerSpriteName, positionX, positionY);
     }
     
     public async Task SendClientsInfoToCaller()

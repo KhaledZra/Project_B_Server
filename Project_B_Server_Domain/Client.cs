@@ -10,6 +10,7 @@ public class Client
     
     public string? ClientId { get; set; }
     public string? ClientName { get; set; }
+    public string? ClientPlayerSprite { get; set; }
     public float PositionX { get; set; }
     public float PositionY { get; set; }
 }
