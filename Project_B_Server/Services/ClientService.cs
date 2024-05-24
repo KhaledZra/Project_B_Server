@@ -18,13 +18,14 @@ public class ClientService(MongoDbService<Client> mongoDbService)
         return result.First();
     }
 
-    public async Task AddClientAsync(string clientId, string clientName, string clientPlayerSprite, float positionX, float positionY)
+    public async Task AddClientAsync(string clientId, string clientName, string clientPlayerSprite, string clientNickName, float positionX, float positionY)
     {
         await mongoDbService.CreateItemAsync(new Client
         {
             ClientId = clientId,
             ClientName = clientName,
             ClientPlayerSprite = clientPlayerSprite,
+            ClientNickName = clientNickName,
             PositionX = positionX,
             PositionY = positionY
         });
