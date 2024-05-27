@@ -4,6 +4,15 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Project_B_Server;
 using Project_B_Server.Hubs;
 using Project_B_Server.Services;
+using Serilog;
+
+using var log = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+
+Log.Logger = log;
+
+Log.Information("Starting Project B Server");
 
 var builder = WebApplication.CreateBuilder(args);
 
